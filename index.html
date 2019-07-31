@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="custom.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="goods-list.js"></script>
+    <script src="categories-list.js"></script>
 </head>
 <body>
     <div id='app'>
@@ -18,48 +20,21 @@
             <div class="col-md-3 main-menu">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Товары</a>
+                        <a v-on:click="menuItemClick('goods')" class="nav-link active" href="#">Товары</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Категории</a>
+                        <a v-on:click="menuItemClick('categories')" class="nav-link" href="#">Категории</a>
                     </li>
                 </ul>
             </div>
             <div class="col-md-9">
                 <div class="section-header">
-                    <h3>{{ current_section}}</h3>
+                    <h3>{{ sectionName }}</h3>
                 </div>
+
+                <goods-list v-if="current_section === 'goods'"></goods-list>
+                <categories-list v-if="current_section === 'categories'"></categories-list>
                 
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                    </tbody>
-                  </table>
             </div>
         </div>
     </div>
@@ -72,7 +47,24 @@
         var app = new Vue({
             el:'#app',
             data:{
-                current_section: 'Товары'
+                current_section: 'goods'
+            },
+            computed: {
+                sectionName:function(){
+                    switch(this.current_section) {
+                        case 'goods':
+                            return 'Товары'
+                        case 'categories':
+                            return 'Категории'
+                        default:
+                            return this.current_section
+                    } 
+                }
+            },
+            methods: {
+                menuItemClick: function(section) {
+                    this.current_section = section
+                }
             }
 
         }
