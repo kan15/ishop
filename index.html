@@ -10,6 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="goods-list.js"></script>
     <script src="categories-list.js"></script>
+    <script src="dashboard.js"></script>
+
 </head>
 <body>
     <div id='app'>
@@ -32,6 +34,7 @@
                     <h3>{{ sectionName }}</h3>
                 </div>
 
+                <dashboard v-if="current_section === 'dashboard'"></dashboard>
                 <goods-list v-if="current_section === 'goods'"></goods-list>
                 <categories-list v-if="current_section === 'categories'"></categories-list>
                 
@@ -47,7 +50,7 @@
         var app = new Vue({
             el:'#app',
             data:{
-                current_section: 'goods'
+                current_section: 'dashboard'
             },
             computed: {
                 sectionName:function(){
@@ -56,6 +59,8 @@
                             return 'Товары'
                         case 'categories':
                             return 'Категории'
+                        case 'dashboard':
+                            return ''
                         default:
                             return this.current_section
                     } 

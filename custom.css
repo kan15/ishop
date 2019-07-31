@@ -11,3 +11,6 @@ body {
 .section-header {
     padding: 20px;
 }
+.widgets-container .card {
+    display: inline-block;
+}
