@@ -1,0 +1,10 @@
+body {
+    background-color: yellow;
+}
+.container {
+    background-color: white;
+    height: 100vh;
+}
+.main-menu {
+    margin-top: 20px;
+}
