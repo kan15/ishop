@@ -11,6 +11,7 @@
     <script src="goods-list.js"></script>
     <script src="categories-list.js"></script>
     <script src="dashboard.js"></script>
+    <script src="category-form.js"></script>
 
 </head>
 <body>
@@ -36,7 +37,8 @@
 
                 <dashboard v-if="current_section === 'dashboard'"></dashboard>
                 <goods-list v-if="current_section === 'goods'"></goods-list>
-                <categories-list v-if="current_section === 'categories'"></categories-list>
+                <categories-list v-if="current_section === 'categories'"
+                                v-bind:categories='categories'></categories-list>
                 
             </div>
         </div>
@@ -50,7 +52,12 @@
         var app = new Vue({
             el:'#app',
             data:{
-                current_section: 'dashboard'
+                current_section: 'categories',
+                categories: [
+                    {id:1, name: "Одежда мужская", status: 'active'},
+                    {id:2, name: "Одежда женская", status: 'active'},
+                    {id:3, name: "Обувь", status: 'active'}
+                ]
             },
             computed: {
                 sectionName:function(){
