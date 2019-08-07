@@ -18,9 +18,9 @@ Vue.component('good-form', {
         this.fillForm()
     },
     watch: {
-      object: function () {
-          this.fillForm()
-      }
+        object: function () {
+            this.fillForm()
+        }
     },
     methods: {
         fillForm: function () {

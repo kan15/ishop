@@ -1,4 +1,4 @@
-Vue.component('categories-list', {
+const CATEGORIES_LIST = {
     template: `
 <div>
     <table class="table">
@@ -39,4 +39,5 @@ Vue.component('categories-list', {
             this.editing_category_id = id
         }
     }
-})
+}
+Vue.component('categories-list', CATEGORIES_LIST)

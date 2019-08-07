@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="custom.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="goods-list.js"></script>
     <script src="categories-list.js"></script>
     <script src="dashboard.js"></script>
@@ -23,10 +24,10 @@
         <div class="col-md-3 main-menu">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a v-on:click="menuItemClick('goods')" class="nav-link active" href="#">Товары</a>
+                    <router-link to="/goods" class="nav-link" href="#">Товары</router-link>
                 </li>
                 <li class="nav-item">
-                    <a v-on:click="menuItemClick('categories')" class="nav-link" href="#">Категории</a>
+                    <router-link to="/categories" class="nav-link" href="#">Категории</router-link>
                 </li>
             </ul>
         </div>
@@ -35,9 +36,12 @@
             <div class="section-header">
                 <h3>{{sectionName}}</h3>
             </div>
-            <dashboard v-if="current_section === 'dashboard'"></dashboard>
-            <goods-list v-bind:goods="goods" v-if="current_section === 'goods'"></goods-list>
-            <categories-list v-bind:categories="categories" v-if="current_section === 'categories'"></categories-list>
+            
+            </br>
+            </br>
+
+            <router-view v-bind:goods="goods" v-bind:categories="categories"></router-view>
+
         </div>
 
     </div>
@@ -57,7 +61,21 @@
 
 
 <script>
+
+
+    const ishop_routes = [
+    { path: '/', component: DASHBOARD },
+    { path: '/goods', component: GOODS_LIST },
+    { path: '/categories', component: CATEGORIES_LIST },
+]
+    
+    const router_for_our_app = new VueRouter({
+    routes: ishop_routes
+})
+
+
     var app = new Vue ({
+        router: router_for_our_app,
         el: '#app',
         data: {
             current_section: 'dashboard',
