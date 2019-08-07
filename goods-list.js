@@ -21,6 +21,8 @@ const GOODS_LIST = {
         </tr>
         </tbody>
     </table>
+    <router-link to="/" class="nav-link">На главную</router-link>
+
     <good-form v-if="editing_good_id" v-bind:object="editingGood"></good-form> 
 </div>
     `,
