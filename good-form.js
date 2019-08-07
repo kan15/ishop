@@ -1,10 +1,10 @@
 Vue.component('good-form', {
     template: `
-<div>
-    <label>Наименование: <input type="text" v-model="name"></label><br>
-    <label>Кол-во: <input type="number" v-model="qty"></label><br>
-    <label>Цена: <input type="number" v-model="price"></label><br>
-</div>
+        <div>
+            <label>Наименование: <input type="text" v-model="name"></label><br>
+            <label>Кол-во: <input type="number" v-model="qty"></label><br>
+            <label>Цена: <input type="number" v-model="price"></label><br>
+        </div>
     `,
     props: ['object'],
     data: function () {

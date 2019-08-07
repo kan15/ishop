@@ -43,7 +43,7 @@
             </br>
             </br>
 
-            <router-view v-bind:goods="goods" v-bind:categories="categories"></router-view>
+            <router-view v-on:category-form-submited='categoryFormSubmited' v-bind:goods="goods" v-bind:categories="categories"></router-view>
 
         </div>
 
@@ -70,6 +70,7 @@
     { name: 'dashboard', path: '/', component: DASHBOARD },
     { name: 'goods-list', path: '/goods', component: GOODS_LIST },
     { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST },
+    { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true },
 ]
     
     const router_for_our_app = new VueRouter({
@@ -102,7 +103,15 @@
                 }
             }
         },
+        methods: {
+            categoryFormSubmited: function(data) {
+                console.log('categoryFormSubmited: ', data)
+                //обновляем данные в массиве Категориес
+                this.$router.push({name:'categories-list'})
+            }
+        },
     })
+    //сделать обновление информации. Реализовать редактирование товаров. Статус сделать селектом. Стилизовать форму
 </script>
 
 </body>
