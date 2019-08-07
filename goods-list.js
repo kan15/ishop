@@ -1,35 +1,44 @@
-Vue.component('goods-list',{
-    template:`
-        <table class="table">
+Vue.component('goods-list', {
+    template: `
+<div>
+    <table class="table">
         <thead class="thead-light">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Наименования</th>
-                <th scope="col">Количество</th>
-                <th scope="col">Цена</th>
-            </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Кол-во</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Цена</th>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Рюки мужские</td>
-                <td>35</td>
-                <td>3650</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Платье женское</td>
-                <td>18</td>
-                <td>2300</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Шлепки</td>
-                <td>131</td>
-                <td>700</td>
-            </tr>
+        <tr v-for="good in goods">
+            <th scope="row">{{good.id}}</th>
+            <td>{{good.name}}</td>
+            <td>{{good.qty}}</td>
+            <td>{{good.price}}</td>
+            <td><div v-on:click="editGood(good.id)" class="btn btn-danger btn-sm">Редактировать</div></td>
+        </tr>
         </tbody>
-        </table>
-    `
-
+    </table>
+    <good-form v-if="editing_good_id" v-bind:object="editingGood"></good-form> 
+</div>
+    `,
+    props: ['goods'],
+        data: function () {
+            return {
+                editing_good_id: null
+            }
+        },
+        computed: {
+            editingGood: function () {
+                if (this.editing_good_id === null) return
+                return this.goods.find(function (el) {return el.id === this.editing_good_id}.bind(this))
+            }
+        },
+        methods: {
+            editGood: function (id) {
+                this.editing_good_id = id
+            }
+    }
 })

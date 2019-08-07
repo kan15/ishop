@@ -1,16 +1,22 @@
 body {
-    background-color: yellow;
+    background: #ddd;
 }
+
 .container {
-    background-color: white;
+    background: white;
     height: 100vh;
 }
+
 .main-menu {
     margin-top: 20px;
 }
+
 .section-header {
     padding: 20px;
 }
+
 .widgets-container .card {
     display: inline-block;
+    width: 48%;
+    padding: 10px;
 }
