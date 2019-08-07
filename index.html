@@ -24,10 +24,13 @@
         <div class="col-md-3 main-menu">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <router-link to="/goods" class="nav-link" href="#">Товары</router-link>
+                    <router-link to="/" class="nav-link">Главная</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/categories" class="nav-link" href="#">Категории</router-link>
+                    <router-link to="/goods" class="nav-link">Товары</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/categories" class="nav-link">Категории</router-link>
                 </li>
             </ul>
         </div>
@@ -64,9 +67,9 @@
 
 
     const ishop_routes = [
-    { path: '/', component: DASHBOARD },
-    { path: '/goods', component: GOODS_LIST },
-    { path: '/categories', component: CATEGORIES_LIST },
+    { name: 'dashboard', path: '/', component: DASHBOARD },
+    { name: 'goods-list', path: '/goods', component: GOODS_LIST },
+    { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST },
 ]
     
     const router_for_our_app = new VueRouter({
@@ -78,7 +81,6 @@
         router: router_for_our_app,
         el: '#app',
         data: {
-            current_section: 'dashboard',
             goods: [
                 {id: 1, name: 'Брюки мужские', qty: 35, price: 2650},
                 {id: 2, name: 'Платье женское', qty: 13, price: 7500},
@@ -92,19 +94,14 @@
         },
         computed: {
             sectionName: function () {
-                switch (this.current_section)  {
-                    case 'goods': return "Товары"
-                    case 'categories': return "Категории"
+                switch (this.$route.name)  {
+                    case 'goods-list': return "Товары"
+                    case 'categories-list': return "Категории"
                     case 'dashboard': return ""
-                    default: return this.current_section
+                    default: return this.$route.name
                 }
             }
         },
-        methods: {
-            menuItemClick: function (section) {
-                this.current_section = section
-            }
-        }
     })
 </script>
 
