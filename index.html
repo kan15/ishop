@@ -39,9 +39,6 @@
             <div class="section-header">
                 <h3>{{sectionName}}</h3>
             </div>
-            
-            </br>
-            </br>
 
             <router-view v-on:category-form-submited='categoryFormSubmited' v-bind:goods="goods" v-bind:categories="categories"></router-view>
 
@@ -69,6 +66,7 @@
     const ishop_routes = [
     { name: 'dashboard', path: '/', component: DASHBOARD },
     { name: 'goods-list', path: '/goods', component: GOODS_LIST },
+    { name: 'good-form', path: '/goods/:id/edit', component: GOOD_FORM, props: true },
     { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST },
     { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true },
 ]

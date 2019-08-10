@@ -15,8 +15,7 @@ const DASHBOARD = {
                 <p class="card-text"><h1><span class="badge badge-secondary">3</span></h1></p>
               </div>
             </div>
-        </div>
-            
+        </div>   
     `
 }
 Vue.component('dashboard', DASHBOARD)

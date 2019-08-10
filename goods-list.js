@@ -8,7 +8,6 @@ const GOODS_LIST = {
             <th scope="col">Наименование</th>
             <th scope="col">Кол-во</th>
             <th scope="col">Цена</th>
-            <th scope="col">Цена</th>
         </tr>
         </thead>
         <tbody>
@@ -17,7 +16,11 @@ const GOODS_LIST = {
             <td>{{good.name}}</td>
             <td>{{good.qty}}</td>
             <td>{{good.price}}</td>
-            <td><div v-on:click="editGood(good.id)" class="btn btn-danger btn-sm">Редактировать</div></td>
+            <td>
+                <router-link v-bind:to="{name:'good-form', params: {id:good.id, object:good}}">
+                    <div class="btn btn-danger btn-sm">Редактировать</div>
+                </router-link>
+            </td>
         </tr>
         </tbody>
     </table>
