@@ -42,7 +42,6 @@
                 <h3>{{sectionName}}</h3>
             </div>
             <router-view v-on:category-form-submitted="categoryFormSubmitted"
-                         v-on:good-form-submitted="goodFormSubmitted"
                          v-bind:categories="categories"></router-view>
         </div>
 
@@ -117,10 +116,7 @@
                 this.categories.splice(index, 1, data)
                 this.$router.push({name: 'categories-list'})
             },
-            goodFormSubmitted: function (data) {
-                this.$store.commit('updateGood', data)
-                this.$router.push({name: 'goods-list'})
-            }
+            
         }
     })
 </script>

@@ -18,7 +18,7 @@ const GOODS_LIST = {
                     <td>{{good.qty}}</td>
                     <td>{{good.price}}</td>
                     <td>
-                        <router-link v-bind:to="{name: 'good-form', params: {id: good.id, object: good}}">
+                        <router-link v-bind:to="{name: 'good-form', params: {id: good.id}}">
                             <div class="btn btn-danger btn-sm">Редактировать</div>
                         </router-link>
                     </td>
@@ -26,7 +26,7 @@ const GOODS_LIST = {
                 </tbody>
             </table>
             <router-link to="/" class="nav-link">На главную</router-link>
-            <router-view></router-view>
+            <router-view v-on:good-form-submitted="goodFormSubmitted"></router-view>
         </div>
     `,
     data: function () {
@@ -43,6 +43,10 @@ const GOODS_LIST = {
     methods: {
         editGood: function (id) {
             this.editing_good_id = id
+        },
+        goodFormSubmitted: function (data) {
+            this.$store.commit('updateGood', data)
+            this.$router.push({name: 'goods-list'})
         }
     }
 }

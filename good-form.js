@@ -16,7 +16,7 @@ const GOOD_FORM = {
     <div v-on:click="submitFormClicked" class="btn btn-primary mt-3 font-weight-bold">Сохранить</div>
 </form>
     `,
-    props: {id: {}, object: {default:{}}},
+    props: ['id'],
     data: function () {
         return {
             name: null,
@@ -28,15 +28,20 @@ const GOOD_FORM = {
         this.fillForm()
     },
     watch: {
-        object: function () {
+        id: function () {
             this.fillForm()
         }
     },
     methods: {
         fillForm: function () {
-            this.name = this.object.name
-            this.qty = this.object.qty
-            this.price = this.object.price
+            var good = this.$store.state.goods.find(good => good.id === this.id)
+            console.log('fillForm', good, this.id, )
+            if(good){
+                this.name = good.name
+                this.qty = good.qty
+                this.price = good.price
+            }
+            
         },
         submitFormClicked: function () {
             this.$emit('good-form-submitted', {id: this.id, name: this.name, qty: this.qty, price: this.price})
