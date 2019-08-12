@@ -14,6 +14,8 @@
     <script src="dashboard.js"></script>
     <script src="category-form.js"></script>
     <script src="good-form.js"></script>
+    <script src='https://unpkg.com/vuex'></script>
+    <script src='store.js'></script>
 </head>
 
 <body>
@@ -32,6 +34,9 @@
                 <li class="nav-item">
                     <router-link to="/categories" class="nav-link">Категории</router-link>
                 </li>
+                <li>
+                    <span class="badge badge-primary">{{$store.state.counter}}</span>
+                </li>
             </ul>
         </div>
 
@@ -41,8 +46,12 @@
             </div>
             <router-view v-on:category-form-submitted="categoryFormSubmitted"
                          v-on:good-form-submitted="goodFormSubmitted"
-                         v-bind:goods="goods"
+                         v-bind:goods="$store.state.goods"
                          v-bind:categories="categories"></router-view>
+            <div v-on:click="$store.commit('increment')" class="btn btn-primary">Увеличить счетчик</div>
+        </br>
+            <input v-model='new_counter_value'>
+            <div v-on:click="$store.commit('setCounterValue', new_counter_value)" class="btn btn-primary">Увеличить счетчик</div>
         </div>
 
     </div>
@@ -74,16 +83,16 @@
         routes: ishop_routes
     })
 
+    
+
 
     var app = new Vue ({
+        store: store_for_our_app,
         router: router_for_our_app,
         el: '#app',
         data: {
-            goods: [
-                {id: 1, name: 'Брюки мужские', qty: 35, price: 2650},
-                {id: 2, name: 'Платье женское', qty: 13, price: 7500},
-                {id: 3, name: 'Кеды', qty: 44, price: 1650}
-            ],
+            new_counter_value: null,
+            
             categories: [
                 {id: 1, name: 'Одежда мужская', status: 'active'},
                 {id: 2, name: 'Одежда женская', status: 'active'},
@@ -110,9 +119,9 @@
                 this.$router.push({name: 'categories-list'})
             },
             goodFormSubmitted: function (data) {
-                var edit_el = this.goods.find(el => el.id === data.id)
-                var index = this.goods.indexOf(edit_el)
-                this.goods.splice(index, 1, data)
+                // var edit_el = this.goods.find(el => el.id === data.id)
+                // var index = this.goods.indexOf(edit_el)
+                // this.goods.splice(index, 1, data)
                 this.$router.push({name: 'goods-list'})
             }
         }
