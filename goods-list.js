@@ -12,7 +12,7 @@ const GOODS_LIST = {
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="good in goods">
+                <tr v-for="good in $store.state.goods">
                     <th scope="row">{{good.id}}</th>
                     <td>{{good.name}}</td>
                     <td>{{good.qty}}</td>
@@ -26,10 +26,9 @@ const GOODS_LIST = {
                 </tbody>
             </table>
             <router-link to="/" class="nav-link">На главную</router-link>
-            <good-form v-if="editing_good_id" v-bind:object="editingGood"></good-form> 
+            <router-view></router-view>
         </div>
     `,
-    props: ['goods'],
     data: function () {
         return {
             editing_good_id: null

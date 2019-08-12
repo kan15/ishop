@@ -34,9 +34,6 @@
                 <li class="nav-item">
                     <router-link to="/categories" class="nav-link">Категории</router-link>
                 </li>
-                <li>
-                    <span class="badge badge-primary">{{$store.state.counter}}</span>
-                </li>
             </ul>
         </div>
 
@@ -46,12 +43,7 @@
             </div>
             <router-view v-on:category-form-submitted="categoryFormSubmitted"
                          v-on:good-form-submitted="goodFormSubmitted"
-                         v-bind:goods="$store.state.goods"
                          v-bind:categories="categories"></router-view>
-            <div v-on:click="$store.commit('increment')" class="btn btn-primary">Увеличить счетчик</div>
-        </br>
-            <input v-model='new_counter_value'>
-            <div v-on:click="$store.commit('setCounterValue', new_counter_value)" class="btn btn-primary">Увеличить счетчик</div>
         </div>
 
     </div>
@@ -73,10 +65,17 @@
 <script>
     const ishop_routes = [
         { name: 'dashboard', path: '/', component: DASHBOARD },
-        { name: 'goods-list', path: '/goods', component: GOODS_LIST },
-        { name: 'good-form', path: '/goods/:id/edit', component: GOOD_FORM, props: true },
-        { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST },
-        { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true }
+        { name: 'goods-list', path: '/goods', component: GOODS_LIST, 
+            children: [
+                { name: 'good-form', path: '/goods/:id/edit', component: GOOD_FORM, props: true }
+            ] },
+
+        
+        { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST, 
+            children: [
+                { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true }
+            ] },
+        
     ]
 
     const router_for_our_app = new VueRouter({
@@ -119,9 +118,7 @@
                 this.$router.push({name: 'categories-list'})
             },
             goodFormSubmitted: function (data) {
-                // var edit_el = this.goods.find(el => el.id === data.id)
-                // var index = this.goods.indexOf(edit_el)
-                // this.goods.splice(index, 1, data)
+                this.$store.commit('updateGood', data)
                 this.$router.push({name: 'goods-list'})
             }
         }

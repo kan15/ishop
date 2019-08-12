@@ -26,7 +26,7 @@ const CATEGORIES_LIST = {
         </tbody>
     </table>
     <router-link to="/" class="nav-link">На главную</router-link>
-    <category-form v-if="editing_category_id" v-bind:object="editingCategory"></category-form>
+    <router-view></router-view>
 </div>
     `,
     props: ['categories'],
