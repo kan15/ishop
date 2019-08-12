@@ -1,13 +1,22 @@
 const GOOD_FORM = {
     template: `
-        <div>
-            <label>Наименование: <input type="text" v-model="name"></label><br>
-            <label>Кол-во: <input type="number" v-model="qty"></label><br>
-            <label>Цена: <input type="number" v-model="price"></label><br>
-            <div v-on:click='submitGoodFormClicked' class='btn btn-primary'>Сохранить</div>
-        </div>
+<form>
+    <div class="form-group w-50">
+        <label>Наименование: </label>
+        <input type="text" v-model="name" class="form-control">
+    </div>
+    <div class="form-group w-50">
+        <label>Кол-во: </label>
+        <input type="number" v-model="qty" class="form-control">
+    </div>
+    <div class="form-group w-50">
+        <label>Цена: </label>
+        <input type="number" v-model="price" class="form-control">
+    </div>
+    <div v-on:click="submitFormClicked" class="btn btn-primary mt-3 font-weight-bold">Сохранить</div>
+</form>
     `,
-    props:{id:{ }, object:{default:{} } },
+    props: {id: {}, object: {default:{}}},
     data: function () {
         return {
             name: null,
@@ -24,15 +33,15 @@ const GOOD_FORM = {
         }
     },
     methods: {
-        submitGoodFormClicked: function () {
-            this.$emit('good-form-submited', {id: this.id, name: this.name, qty: this.qty, this: this.price})
-        },
         fillForm: function () {
             this.name = this.object.name
             this.qty = this.object.qty
             this.price = this.object.price
-
+        },
+        submitFormClicked: function () {
+            this.$emit('good-form-submitted', {id: this.id, name: this.name, qty: this.qty, price: this.price})
         }
     }
 }
-    Vue.component('good-form', GOOD_FORM)
+
+Vue.component('good-form', GOOD_FORM)

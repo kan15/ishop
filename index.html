@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="custom.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
@@ -39,9 +39,10 @@
             <div class="section-header">
                 <h3>{{sectionName}}</h3>
             </div>
-
-            <router-view v-on:category-form-submited='categoryFormSubmited' v-bind:goods="goods" v-bind:categories="categories"></router-view>
-
+            <router-view v-on:category-form-submitted="categoryFormSubmitted"
+                         v-on:good-form-submitted="goodFormSubmitted"
+                         v-bind:goods="goods"
+                         v-bind:categories="categories"></router-view>
         </div>
 
     </div>
@@ -61,19 +62,17 @@
 
 
 <script>
-
-
     const ishop_routes = [
-    { name: 'dashboard', path: '/', component: DASHBOARD },
-    { name: 'goods-list', path: '/goods', component: GOODS_LIST },
-    { name: 'good-form', path: '/goods/:id/edit', component: GOOD_FORM, props: true },
-    { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST },
-    { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true },
-]
-    
+        { name: 'dashboard', path: '/', component: DASHBOARD },
+        { name: 'goods-list', path: '/goods', component: GOODS_LIST },
+        { name: 'good-form', path: '/goods/:id/edit', component: GOOD_FORM, props: true },
+        { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST },
+        { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true }
+    ]
+
     const router_for_our_app = new VueRouter({
-    routes: ishop_routes
-})
+        routes: ishop_routes
+    })
 
 
     var app = new Vue ({
@@ -95,21 +94,29 @@
             sectionName: function () {
                 switch (this.$route.name)  {
                     case 'goods-list': return "Товары"
+                    case 'good-form': return "Редактирование товара"
                     case 'categories-list': return "Категории"
+                    case 'category-form': return "Редактирование категории"
                     case 'dashboard': return ""
                     default: return this.$route.name
                 }
             }
         },
         methods: {
-            categoryFormSubmited: function(data) {
-                console.log('categoryFormSubmited: ', data)
-                //обновляем данные в массиве Категориес
-                this.$router.push({name:'categories-list'})
+            categoryFormSubmitted: function (data) {
+                var edit_el = this.categories.find(el => el.id === data.id)
+                var index = this.categories.indexOf(edit_el)
+                this.categories.splice(index, 1, data)
+                this.$router.push({name: 'categories-list'})
+            },
+            goodFormSubmitted: function (data) {
+                var edit_el = this.goods.find(el => el.id === data.id)
+                var index = this.goods.indexOf(edit_el)
+                this.goods.splice(index, 1, data)
+                this.$router.push({name: 'goods-list'})
             }
-        },
+        }
     })
-    //сделать обновление информации. Реализовать редактирование товаров. Статус сделать селектом. Стилизовать форму
 </script>
 
 </body>
