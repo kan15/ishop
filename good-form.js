@@ -1,22 +1,30 @@
 const GOOD_FORM = {
     template: `
-<form>
-    <div class="form-group w-50">
-        <label>Наименование: </label>
-        <input type="text" v-model="name" class="form-control">
-    </div>
-    <div class="form-group w-50">
-        <label>Кол-во: </label>
-        <input type="number" v-model="qty" class="form-control">
-    </div>
-    <div class="form-group w-50">
-        <label>Цена: </label>
-        <input type="number" v-model="price" class="form-control">
-    </div>
-    <div v-on:click="submitFormClicked" class="btn btn-primary mt-3 font-weight-bold">Сохранить</div>
-</form>
+    <div id="myModal2" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Редактирование категории:</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                    <label>Наименование: </label>
+                    <input type="text" v-model="name" class="form-control">
+                    <label>Кол-во: </label>
+                    <input type="number" v-model="qty" class="form-control">
+                    <label>Цена: </label>
+                    <input type="number" v-model="price" class="form-control">
+                </div>
+                    <div class="modal-footer">
+                        <button v-on:click="submitFormClicked" data-dismiss="modal" type="button" class="btn btn-primary">Сохранить изменения</button>
+                        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Закрыть</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     `,
-    props: ['id'],
+    props:['id'],
     data: function () {
         return {
             name: null,
@@ -35,13 +43,11 @@ const GOOD_FORM = {
     methods: {
         fillForm: function () {
             var good = this.$store.state.goods.find(good => good.id === this.id)
-            console.log('fillForm', good, this.id, )
-            if(good){
-                this.name = good.name
-                this.qty = good.qty
-                this.price = good.price
+            if (good) {
+            this.name = good.name
+            this.qty = good.qty
+            this.price = good.price
             }
-            
         },
         submitFormClicked: function () {
             this.$emit('good-form-submitted', {id: this.id, name: this.name, qty: this.qty, price: this.price})

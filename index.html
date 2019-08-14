@@ -14,8 +14,8 @@
     <script src="dashboard.js"></script>
     <script src="category-form.js"></script>
     <script src="good-form.js"></script>
-    <script src='https://unpkg.com/vuex'></script>
-    <script src='store.js'></script>
+    <script src="https://unpkg.com/vuex"></script>
+    <script src="store.js"></script>
 </head>
 
 <body>
@@ -41,10 +41,7 @@
             <div class="section-header">
                 <h3>{{sectionName}}</h3>
             </div>
-            <router-view v-on:category-form-submitted="categoryFormSubmitted"
-                         v-bind:categories="categories"></router-view>
-        </div>
-
+            <router-view></router-view>
     </div>
 </div>
 </div>
@@ -64,38 +61,28 @@
 <script>
     const ishop_routes = [
         { name: 'dashboard', path: '/', component: DASHBOARD },
-        { name: 'goods-list', path: '/goods', component: GOODS_LIST, 
-            children: [
-                { name: 'good-form', path: '/goods/:id/edit', component: GOOD_FORM, props: true }
-            ] },
-
-        
-        { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST, 
-            children: [
-                { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true }
-            ] },
-        
+        { name: 'goods-list', path: '/goods', component: GOODS_LIST,
+          children: [
+            { name: 'good-form', path: '/goods/:id/edit', component: GOOD_FORM, props: true }
+          ]
+        },
+        { name: 'categories-list', path: '/categories', component: CATEGORIES_LIST,
+          children: [
+            { name: 'category-form', path: '/categories/:id/edit', component: CATEGORY_FORM, props: true }
+          ]
+        },
     ]
 
     const router_for_our_app = new VueRouter({
         routes: ishop_routes
     })
 
-    
-
-
     var app = new Vue ({
         store: store_for_our_app,
         router: router_for_our_app,
         el: '#app',
         data: {
-            new_counter_value: null,
-            
-            categories: [
-                {id: 1, name: 'Одежда мужская', status: 'active'},
-                {id: 2, name: 'Одежда женская', status: 'active'},
-                {id: 3, name: 'Обувь', status: 'active'}
-            ]
+            new_counter_value: null
         },
         computed: {
             sectionName: function () {
@@ -108,18 +95,13 @@
                     default: return this.$route.name
                 }
             }
-        },
-        methods: {
-            categoryFormSubmitted: function (data) {
-                var edit_el = this.categories.find(el => el.id === data.id)
-                var index = this.categories.indexOf(edit_el)
-                this.categories.splice(index, 1, data)
-                this.$router.push({name: 'categories-list'})
-            },
-            
         }
     })
 </script>
 
 </body>
 </html>
+
+
+
+// редактирование категории (по аналогии с товарами), вывод как поп ап(модальное окно)
